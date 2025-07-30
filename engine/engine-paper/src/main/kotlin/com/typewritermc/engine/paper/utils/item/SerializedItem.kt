@@ -1,5 +1,6 @@
 package com.typewritermc.engine.paper.utils.item
 
+import com.nexomc.nexo.api.NexoItems
 import com.typewritermc.core.books.pages.Colors
 import com.typewritermc.core.extension.annotations.AlgebraicTypeInfo
 import com.typewritermc.core.extension.annotations.Default
@@ -43,8 +44,14 @@ class SerializedItem(
         amount = this@SerializedItem.amount.get(player, context) ?: 1
     }
 
-    override fun isSameAs(player: Player?, item: ItemStack?, context: InteractionContext?): Boolean =
-        this.itemStack.isSimilar(item)
+    override fun isSameAs(player: Player?, item: ItemStack?, context: InteractionContext?): Boolean {
+        try {
+            if (NexoItems.exists(item) && NexoItems.exists(this.itemStack)) {
+                return NexoItems.idFromItem(item).equals(NexoItems.idFromItem(this.itemStack))
+            }
+        } catch (e: Throwable) {}
+        return this.itemStack.isSimilar(item)
+    }
 
     override fun exactMatch(player: Player?, item: ItemStack?, context: InteractionContext?): Boolean =
         this.itemStack.isSimilar(item) && this.itemStack.amount == item?.amount

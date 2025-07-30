@@ -16,6 +16,7 @@ allprojects {
 
     repositories {
         mavenCentral()
+        maven("https://repo.nexomc.com/releases")
         // PacketEvents
         maven("https://repo.codemc.io/repository/maven-snapshots/")
     }
@@ -40,6 +41,7 @@ subprojects {
     dependencies {
         api("io.insert-koin:koin-core:4.0.4")
         compileOnly("com.google.code.gson:gson:2.13.1")
+        compileOnly("com.nexomc:nexo:1.8.0")
 
         compileOnlyApi(kotlin("stdlib"))
         compileOnlyApi(kotlin("reflect"))
